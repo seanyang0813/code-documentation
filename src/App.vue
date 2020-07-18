@@ -15,4 +15,5 @@
 </script>
 
 <style>
+  @import './assets/css/modal.css';
 </style>

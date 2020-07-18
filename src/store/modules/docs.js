@@ -1,7 +1,7 @@
 const state = {
     docs: [{
         queryList: [{text:'sean', mutability:false}, {text:'yang', mutability:true}],
-        description: 'this is something cool',
+        description: 'this is something cool earfiaewf feawfhoie feof',
         id: 0,
     },
     {
@@ -9,19 +9,20 @@ const state = {
         description: 'this is something cool2',
         id: 1,
     }],
-    queryId: 0,
+    queryId: 3,
     filter: null,
 }
 
 const mutations = {
-    'ADD_QUERY'(state, {newQuery}){
-       state.push(newQuery);
+    'ADD_QUERY'(state, newQuery){
+       state.docs.push(newQuery);
+       state.queryId ++;
     },
 }
 
 const actions = {
     addQuery({commit}, newQuery) {
-        commit('SELL_STOCK', newQuery);
+        commit('ADD_QUERY', newQuery);
     }
 }
 
