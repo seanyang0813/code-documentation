@@ -39,6 +39,7 @@ export default {
             let before = this.localQuery.substring(0,  cursorIndex);
             let after  = this.localQuery.substring(cursorIndex, this.localQuery.length);
             this.localQuery = before + this.placeHolder + after;
+            textarea.focus();
         }
     }
     

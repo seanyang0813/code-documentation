@@ -1,7 +1,7 @@
 <template>
     <div class="modal-body ">
         <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}
-            <input disabled :placeholder="variables[index]" v-if="index < (parsed.length - 1)" v-model="inputs[index]" class="border-gray-600 border" type="text">
+            <input disabled :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" :placeholder="variables[index]" v-if="index < (parsed.length - 1)" v-model="inputs[index]" class="border" type="text">
         </span>
         <div>
             <br>
@@ -27,6 +27,7 @@ export default {
         return {
             inputs: [],
             inputsDescription: new Map(),
+            colorCode: [],
         }
     },
     computed: {
@@ -42,6 +43,17 @@ export default {
         submit() {
             console.log(this.inputsDescription);
         },
+        randomColor() {
+            for (let i = 0; i < this.parsed.length; i++) {
+                let r = Math.floor(256 * Math.random());
+                let g = Math.floor(256 * Math.random());
+                let b = Math.floor(256 * Math.random());
+                this.colorCode[i] = [r,g,b];
+             }
+        }
+    },
+    created() {
+        this.randomColor();
     }
     
 }
