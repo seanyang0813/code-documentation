@@ -20,20 +20,15 @@ export default {
     data() {
         return {
             inputs: [],
+            regex: /<😀.*?>/g
         }
     },
     created() {
-        let regex = new RegExp(/<😀(.*?)>/g);
-        let len = this.query.split(regex).length;
-        for (let i = 0; i < len - 1; i++) {
-            this.inputs[i] = '';
-        }
+        this.update();
     },
     computed: {
         parsed() {
-            let regex = /<😀.*?>/g;
-            console.log(this.query.split(regex));
-            console.log(this.query.match(regex));
+            let regex = this.regex;
             return this.query.split(regex);
         }
     },
@@ -43,6 +38,22 @@ export default {
             this.$emit('updateVariables', this.inputs);
             this.$emit('changePage', 'third');
         },
+        update() {
+            let regex = this.regex;            
+            let arr = this.query.split(regex);
+            let matched = this.query.match(regex);
+            this.inputs = [];
+            for (let i = 0; i < arr.length - 1; i++) {
+                let sub = matched[i];
+                this.inputs[i] = sub.substring(3, sub.length - 1);
+            }
+            
+        }
+    },
+    watch: {
+        query: function () {
+            this.update();
+        }
     }
     
 }
