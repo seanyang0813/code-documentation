@@ -21,7 +21,7 @@ export default {
     props: ["query", "placeHolder"],
     data: function() {
         return {
-            localQuery: ''
+            localQuery: '',
         }
     },
     created() {

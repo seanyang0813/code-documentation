@@ -30,7 +30,7 @@ export default {
         return {
             current: Initial,
             query: '',
-            placeHolder: '<>\\😀/<>',
+            placeHolder: '<😀>',
             variables: [],
         }
     },

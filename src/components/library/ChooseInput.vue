@@ -23,14 +23,18 @@ export default {
         }
     },
     created() {
-        let len = this.query.split(this.placeHolder).length;
+        let regex = new RegExp(/<😀(.*?)>/g);
+        let len = this.query.split(regex).length;
         for (let i = 0; i < len - 1; i++) {
             this.inputs[i] = '';
         }
     },
     computed: {
         parsed() {
-            return this.query.split(this.placeHolder);
+            let regex = /<😀.*?>/g;
+            console.log(this.query.split(regex));
+            console.log(this.query.match(regex));
+            return this.query.split(regex);
         }
     },
     methods: {
