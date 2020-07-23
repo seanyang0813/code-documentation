@@ -5,7 +5,7 @@
         </span>
         
         <div class="flex justify-between">
-            <button @click="$emit('changePage', 'first')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button @click="toFirst" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Previous
             </button>
             <button @click="toThird" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -37,6 +37,26 @@ export default {
             console.log(this.inputs);
             this.$emit('updateVariables', this.inputs);
             this.$emit('changePage', 'third');
+            //update the query by joining
+            this.myUpdateQuery();
+        },
+        toFirst() {
+            this.$emit('changePage', 'first');
+            //update the query by joining
+            this.myUpdateQuery();
+        },
+        myUpdateQuery: function() {
+            let result = '';
+            let regex = this.regex;            
+            let arr = this.query.split(regex);
+            for (let i = 0; i < arr.length; i++) {
+                result += arr[i];
+                if (i < this.inputs.length) {
+                    result += ('<😀' + this.inputs[i] + '>');
+                }
+
+            }
+            this.$emit('updateQuery', result);
         },
         update() {
             let regex = this.regex;            

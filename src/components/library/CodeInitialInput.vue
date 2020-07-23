@@ -27,11 +27,15 @@ export default {
     created() {
         this.localQuery = this.query;
     },
+    watch: {
+        query: function() {
+            this.localQuery = this.query;
+        }
+    },
     methods: {
         toSecond() {
             this.$emit('changePage', 'second');
             this.$emit('updateQuery', this.localQuery);
-            console.log(this.query);
         },
         insertInput() {
             let textarea = this.$refs.ta;

@@ -1,12 +1,12 @@
 <template>
     <div class="modal-body ">
-        <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}
+        <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap my-1">{{segment}}
             <input disabled :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" :placeholder="variables[index]" v-if="index < (parsed.length - 1)" v-model="inputs[index]" class="border" type="text">
         </span>
         <div>
             <br>
             <span v-for="(variable, index) in parsedVariables" :key="index">{{variable}}
-                <textarea v-model="inputsDescription[variable]" ref="ta" name="query" placeholder="Enter description of the variable" class="border-gray-600 border rounded shadow w-full"></textarea>
+                <textarea :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" v-model="inputsDescription[variable]" ref="ta" placeholder="Enter description of the variable" class="border-gray-600 border rounded shadow w-full"></textarea>
                 <br>
             </span>
         </div>
@@ -28,11 +28,13 @@ export default {
             inputs: [],
             inputsDescription: new Map(),
             colorCode: [],
+            regex: /<😀.*?>/g
         }
     },
     computed: {
         parsed() {
-            return this.query.split(this.placeHolder);
+            let regex = this.regex;
+            return this.query.split(regex);
         },
         parsedVariables() {
             let s = new Set(this.variables);
@@ -41,7 +43,6 @@ export default {
     },
     methods: {
         submit() {
-            console.log(this.inputsDescription);
         },
         randomColor() {
             for (let i = 0; i < this.parsed.length; i++) {
@@ -54,6 +55,11 @@ export default {
     },
     created() {
         this.randomColor();
+    },
+    watch: {
+        query: function() {
+            this.randomColor();
+        }
     }
     
 }
