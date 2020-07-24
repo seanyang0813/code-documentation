@@ -12,7 +12,7 @@
                         </h1>
                     </div>
                     <keep-alive>
-                        <component @updateQuery="updateQuery" @updateVariables="updateVariables" @changePage="changePage" v-bind:is="current" :query="query" :variables="variables" :placeHolder="placeHolder"></component>
+                        <component @updateQuery="updateQuery" @updateVariables="updateVariables" @changePage="changePage" v-bind:is="current" :query="query" :variables="variables" :placeHolder="placeHolder" @close="$emit('close')"></component>
                     </keep-alive>
                     
                 </div>

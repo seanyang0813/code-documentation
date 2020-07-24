@@ -3,7 +3,7 @@
         <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}
             <input v-if="index < (parsed.length - 1)" v-model="inputs[index]" class="border-gray-600 border" type="text">
         </span>
-        
+        <p class="m-8">Tip: Name two variables the same and they will share the same source</p>
         <div class="flex justify-between">
             <button @click="toFirst" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Previous
@@ -65,7 +65,10 @@ export default {
             this.inputs = [];
             for (let i = 0; i < arr.length - 1; i++) {
                 let sub = matched[i];
-                this.inputs[i] = sub.substring(3, sub.length - 1);
+                if (sub.length > 3) {
+                    this.inputs[i] = sub.substring(3, sub.length - 1);
+                }
+                
             }
             
         }

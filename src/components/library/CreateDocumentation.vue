@@ -5,6 +5,10 @@
         </span>
         <div>
             <br>
+            <p>Description: </p>    
+            <textarea v-model="description" id="des" placeholder="Briefly provide a description" class="border-gray-600 border rounded shadow w-full">
+            </textarea>
+            <br>
             <span v-for="(variable, index) in parsedVariables" :key="index">{{variable}}
                 <textarea :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" v-model="inputsDescription[variable]" ref="ta" placeholder="Enter description of the variable" class="border-gray-600 border rounded shadow w-full"></textarea>
                 <br>
@@ -28,7 +32,8 @@ export default {
             inputs: [],
             inputsDescription: new Map(),
             colorCode: [],
-            regex: /<😀.*?>/g
+            regex: /<😀.*?>/g,
+            description: '',
         }
     },
     computed: {
@@ -43,6 +48,12 @@ export default {
     },
     methods: {
         submit() {
+            let ret = {};
+            ret.query = this.query;
+            ret.description = this.description;
+            ret.map = this.inputsDescription;
+            this.$store.dispatch('addQuery', ret);
+            this.$emit("close");
         },
         randomColor() {
             for (let i = 0; i < this.parsed.length; i++) {
@@ -64,3 +75,9 @@ export default {
     
 }
 </script>
+
+<style scoped>
+    #des {
+        height: 30vh;
+    }
+</style>

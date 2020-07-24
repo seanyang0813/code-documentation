@@ -1,21 +1,13 @@
 const state = {
-    docs: [{
-        queryList: [{text:'sean', mutability:false}, {text:'yang', mutability:true}],
-        description: 'this is something cool earfiaewf feawfhoie feof',
-        id: 0,
-    },
-    {
-        queryList: [{text:'sean2'}, {text:'yang2'}],
-        description: 'this is something cool2',
-        id: 1,
-    }],
-    queryId: 3,
+    docs: [],
+    queryId: 0,
     filter: null,
 }
 
 const mutations = {
     'ADD_QUERY'(state, newQuery){
        state.docs.push(newQuery);
+       console.log(newQuery)
        state.queryId ++;
     },
 }

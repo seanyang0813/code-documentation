@@ -1,15 +1,15 @@
-<template>
-
-        
+<template>    
     <div class=" bg-gray-200 m-4 max-w-sm rounded overflow-hidden shadow-lg object-center w-3/5">
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2">
                 <p>
-                    <span v-for="(text, index) in doc.queryList" :key=index :class="{'bg-blue-300': text.mutability}">{{text.text}} </span>
+                    <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}
+                        <input disabled v-if="index < (parsed.length - 1)" class="border border-black" style="width: 3em" type="text">
+                    </span>
                 </p> 
             </div>
             <p class="text-gray-700 text-base">
-                {{doc.description}}
+                {{shortDescription}}
             </p>
         </div>
         
@@ -21,6 +21,25 @@
 
     export default {
         props: ["doc"],
+        data: function(){
+            return {
+                regex: /<😀.*?>/g
+            }
+        },
+        computed: {
+            parsed() {
+                let regex = this.regex;
+                return this.doc.query.split(regex);
+            },
+            shortDescription() {
+                if (this.doc.description.length < 100) {
+                    return this.doc.description; 
+                }
+                else {
+                    return this.doc.description.substring(0, 100) + '...';
+                }
+            }
+        }
     }
 </script>
 
