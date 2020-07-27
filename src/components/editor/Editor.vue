@@ -1,6 +1,13 @@
 <template>
 <div class="flex">
-  <codemirror class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
+  <div>
+    <ul class="flex bg-gray-300 border border-gray-500">
+        <li class="p-3">
+            <a class="text-blue-600">Code Editor</a>
+        </li>    
+    </ul>
+    <codemirror class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
+  </div>
   <side class="overflow-y-auto"></side>
 </div>
 </template>
