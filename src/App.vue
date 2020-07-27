@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="myapp flex flex-col">
     <my-header></my-header>
-    <router-view></router-view>
+    <router-view class="fullHeight overflow-y-auto"></router-view>
   </div>
 </template>
 
@@ -16,4 +16,11 @@
 
 <style>
   @import './assets/css/modal.css';
+  .myapp {
+    height: 100vh;  
+  }
+
+  .fullHeight {
+    flex: 1 1 auto;
+  }
 </style>

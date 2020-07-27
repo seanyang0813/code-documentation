@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-blue-100 flex justify-end">
+  <div class="p-5 bg-blue-100 flex justify-end header">
     <ul class="flex">
         <li class="mr-6">
             <router-link to='/editor' class="text-blue-600 hover:text-blue-800" href="#">Editor</router-link>
@@ -15,4 +15,10 @@
 export default {
 }
 </script>
+
+<style scoped>
+  .header {
+    flex: 0 1 auto;
+  }
+</style>
 

@@ -4,6 +4,7 @@
             <input v-if="index < (parsed.length - 1)" v-model="inputs[index]" class="border-gray-600 border" type="text">
         </span>
         <p class="m-8">Tip: Name two variables the same and they will share the same source</p>
+        <p class="m-8 text-red-500" v-if="showWarning">Warning: Have a variable name for each inputs</p> 
         <div class="flex justify-between">
             <button @click="toFirst" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Previous
@@ -20,7 +21,8 @@ export default {
     data() {
         return {
             inputs: [],
-            regex: /<😀.*?>/g
+            regex: /<😀.*?>/g,
+            showWarning: false,
         }
     },
     created() {
@@ -35,10 +37,21 @@ export default {
     methods: {
         toThird() {
             console.log(this.inputs);
-            this.$emit('updateVariables', this.inputs);
-            this.$emit('changePage', 'third');
-            //update the query by joining
-            this.myUpdateQuery();
+            let checkEmpty = false;
+            for (let i = 0; i < this.inputs.length; i++) {
+                if (this.inputs[i].length == 0) {
+                    checkEmpty = true;
+                }
+            }
+            if (checkEmpty == false) {
+                this.$emit('updateVariables', this.inputs);
+                this.$emit('changePage', 'third');
+                //update the query by joining
+                this.myUpdateQuery();
+            }
+            else {
+                this.showWarning = true;
+            }
         },
         toFirst() {
             this.$emit('changePage', 'first');
@@ -76,6 +89,9 @@ export default {
     watch: {
         query: function () {
             this.update();
+        },
+        inputs: function() {
+            this.showWarning = false;
         }
     }
     
