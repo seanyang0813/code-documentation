@@ -6,16 +6,16 @@
             </li>
             
         </ul>
-        <library></library>
+        <librarypanel></librarypanel>
         
     </div>
 </template>
 
 <script>
-import Library from '../library/Library.vue'
+import LibraryPanel from './LibraryPanel.vue'
 export default {
     components: {
-        library: Library
+        librarypanel: LibraryPanel
     }
 }
 </script>

@@ -6,7 +6,8 @@
             <a class="text-blue-600">Code Editor</a>
         </li>    
     </ul>
-    <codemirror class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
+    <codemirror ref="myCm" class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
+    <button>button</button>
   </div>
   <side class="overflow-y-auto"></side>
 </div>
@@ -16,6 +17,7 @@
 import 'codemirror/mode/sql/sql.js'
 import 'codemirror/theme/base16-dark.css'
 import SidePanel from './SidePanel.vue'
+import {eventBus} from '../../main.js'
 export default {
   components: {
     side: SidePanel
@@ -33,15 +35,8 @@ export default {
     }
   },
   methods: {
-    onCmReady(cm) {
-      console.log('the editor is readied!', cm)
-    },
-    onCmFocus(cm) {
-      console.log('the editor is focus!', cm)
-    },
-    onCmCodeChange(newCode) {
-      console.log('this is new code', newCode)
-      this.code = newCode
+    insert(text) {
+      this.codemirror.replaceSelection(text);
     }
   },
   computed: {
@@ -49,6 +44,11 @@ export default {
       return this.$refs.myCm.codemirror
     }
   },
+  created() {
+    eventBus.$on('insert', (result)=>{
+      this.insert(result);
+    });
+  }
 }
 </script>
 
