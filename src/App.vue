@@ -17,7 +17,7 @@
 <style>
   @import './assets/css/modal.css';
   .myapp {
-    height: 100vh;  
+    min-height: 100vh;  
   }
 
   .fullHeight {

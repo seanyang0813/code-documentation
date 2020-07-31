@@ -21,7 +21,4 @@ export default {
 </script>
 
 <style scoped>
-    .side {
-        width: 40vw;
-    }
 </style>

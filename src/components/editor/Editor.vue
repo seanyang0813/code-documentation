@@ -1,15 +1,15 @@
 <template>
 <div class="flex">
-  <div>
+  <div class="mirrorBox overflow-y-auto">
     <ul class="flex bg-gray-300 border border-gray-500">
         <li class="p-3">
             <a class="text-blue-600">Code Editor</a>
         </li>    
     </ul>
-    <codemirror ref="myCm" class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
-    <button>button</button>
+    <codemirror ref="mycm" class="CodeMirror overflow-y-auto" v-model="code" :options="cmOptions"></codemirror>
+
   </div>
-  <side class="overflow-y-auto"></side>
+  <side class="overflow-y-auto size"></side>
 </div>
 </template>
 
@@ -34,28 +34,40 @@ export default {
       }
     }
   },
-  methods: {
-    insert(text) {
-      this.codemirror.replaceSelection(text);
-    }
-  },
   computed: {
     codemirror() {
-      return this.$refs.myCm.codemirror
+      return this.$refs.mycm.codemirror
     }
   },
-  created() {
-    eventBus.$on('insert', (result)=>{
-      this.insert(result);
-    });
+  mounted() {
+    eventBus.$on('insertResult', this.insert);
+  },
+  methods: {
+    insert(result) {
+      if (this.$refs.mycm && this.$refs.mycm.codemirror) {
+        this.$refs.mycm.codemirror.replaceSelection(result);
+        this.$refs.mycm.codemirror.focus(); 
+      }
+           
+      
+    }
+
   }
 }
 </script>
 
 <style>
 .CodeMirror {
-  height: 100% !important;
+  height: 100vh !important;
   background-color: blue;
+}
+
+.mirrorBox {
   width: 60vw;
+}
+
+.size {
+  width: 40vw;
+  max-height: 100vh;
 }
 </style>

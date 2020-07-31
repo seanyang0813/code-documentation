@@ -7,6 +7,9 @@
         <li class="mr-6">
             <router-link to='/library' class="text-blue-600 hover:text-blue-800" href="#">Library</router-link>
         </li>
+         <li class="mr-6">
+            <router-link to='/login' class="text-blue-600 hover:text-blue-800" href="#">Login</router-link>
+        </li>
     </ul>
   </div>
 </template>

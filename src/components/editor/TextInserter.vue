@@ -96,8 +96,8 @@ export default {
                 }
 
             }
-            console.log(result)
-            eventBus.$emit('insert', result);
+            console.log("insert called")
+            eventBus.$emit('insertResult', result);
         }
     },
     props: ['doc'],
