@@ -63,31 +63,40 @@ export default {
   created() {
     var user = firebase.auth().currentUser;
       if (user) {
+        console.log(user);
         this.loggedin = true;
+        console.log("loggedin")
       }  
   },
   methods: {
     submit() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      .then((result)=> {
-        var data = null;
-        this.email = "";
-        this.password = "";
-        firebase.database().ref('/users/' + result.user.uid.toString()).once('value').then((snapshot) => {
-          data = snapshot.val();
-          this.$store.dispatch('setState', data);
-          this.loggedin = true;
-        });
-      }).catch((error) =>{
-        // Handle error.
-        this.email = "";
-        this.password = "";
-        this.error = true;
-        var errorCode = error.code;
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+      .then(() => {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then((result)=> {
+          var data = null;
+          this.email = "";
+          this.password = "";
+          firebase.database().ref('/users/' + result.user.uid.toString()).once('value').then((snapshot) => {
+            data = snapshot.val();
+            this.$store.dispatch('setState', data);
+            this.loggedin = true;
+          });
+        }).catch((error) =>{
+          // Handle error.
+          this.email = "";
+          this.password = "";
+          this.error = true;
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        });   
+      })
+      .catch(function(error) {
         var errorMessage = error.message;
-        console.log(errorCode);
         console.log(errorMessage);
-      });   
+      });
     },
     signout() {
       
