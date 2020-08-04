@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-full max-w-xs  pt-10">
+    <div v-if="!loggedin" class="w-full max-w-xs  pt-10">
       <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h1 class="font-bold text-3xl mb-3">Sign in</h1>
         <div class="mb-4">
@@ -24,6 +24,14 @@
         </div>
       </form>
     </div>
+    <div v-if="loggedin" class="w-full max-w-xs  pt-10 flex flex-col">
+      <p class="pt-5">Already signed in. Click the sign out button to signout</p>
+      <div class="flex justify-center">
+        <button @click="signout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Sign Out
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,7 +44,8 @@ export default {
     return {  
       email: "",
       password: "",  
-      error: false
+      error: false,
+      loggedin: false,
     };
   },
   watch: {
@@ -51,20 +60,23 @@ export default {
       }
     }
   },
+  created() {
+    var user = firebase.auth().currentUser;
+      if (user) {
+        this.loggedin = true;
+      }  
+  },
   methods: {
     submit() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       .then((result)=> {
         var data = null;
-        console.log(result)
         this.email = "";
         this.password = "";
-        console.log(result.user.uid);
         firebase.database().ref('/users/' + result.user.uid.toString()).once('value').then((snapshot) => {
-          console.log(snapshot.val());
-          data = snapshot.val(); 
-          console.log(data);
+          data = snapshot.val();
           this.$store.dispatch('setState', data);
+          this.loggedin = true;
         });
       }).catch((error) =>{
         // Handle error.
@@ -75,10 +87,16 @@ export default {
         var errorMessage = error.message;
         console.log(errorCode);
         console.log(errorMessage);
+      });   
+    },
+    signout() {
+      
+      firebase.auth().signOut().then(() => {
+        console.log("signed out");
+        this.loggedin = false;
+      }).catch(function(error) {
+        console.log(error);
       });
-     
-        
-        
     }
   }
 };

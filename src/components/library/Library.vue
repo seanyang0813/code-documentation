@@ -21,9 +21,6 @@
         <span class="font-black text-gray-100">+</span>
         <span class="font-bold text-gray-100"> Add new query</span>
       </button>  
-      <button @click="store">
-        Store the data
-      </button> 
   </div>
 </template>
 
@@ -50,9 +47,8 @@ export default {
       if (user) {
         let uid = user.uid
         firebase.database().ref('/users/' + uid.toString()).set(this.$store.getters.all);
-      }
-      
-    }
+      }  
+    },
   },
   computed: {
     docs: function() {

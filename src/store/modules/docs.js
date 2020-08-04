@@ -1,3 +1,4 @@
+import firebase from "firebase";
 const state = {
     docs: [],
     queryId: 0,
@@ -8,12 +9,15 @@ const mutations = {
        state.docs.push(newQuery);
        console.log(newQuery)
        state.queryId ++;
+       var user = firebase.auth().currentUser;
+       if (user) {
+        let uid = user.uid
+        firebase.database().ref('/users/' + uid.toString()).set(state);
+       }  
     },
     'SET_STATE'(state, newState) {
-        console.log(state)
         state.docs = newState.docs;
         state.queryId = newState.queryId;
-        console.log(state);
     }
 }
 
