@@ -1,7 +1,6 @@
 const state = {
     docs: [],
     queryId: 0,
-    filter: null,
 }
 
 const mutations = {
@@ -10,26 +9,33 @@ const mutations = {
        console.log(newQuery)
        state.queryId ++;
     },
+    'SET_STATE'(state, newState) {
+        console.log(state)
+        state.docs = newState.docs;
+        state.queryId = newState.queryId;
+        console.log(state);
+    }
 }
 
 const actions = {
     addQuery({commit}, newQuery) {
         commit('ADD_QUERY', newQuery);
+    },
+    setState({commit}, newState) {
+        commit('SET_STATE', newState);
     }
 }
 
 const getters = {
     docs (state) {
-        if (state.filter) {
-            return state.docs.filter(doc=>{
-                return state.filter(doc);
-            })
-        } else {
-            return state.docs.map(doc=> doc);
-        }
+        return state.docs.map(doc=> doc);
+        
     },
     queryId(state) {
         return state.queryId;
+    },
+    all(state) {
+        return state
     }
 }
 

@@ -55,7 +55,17 @@ export default {
     submit() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       .then((result)=> {
+        var data = null;
         console.log(result)
+        this.email = "";
+        this.password = "";
+        console.log(result.user.uid);
+        firebase.database().ref('/users/' + result.user.uid.toString()).once('value').then((snapshot) => {
+          console.log(snapshot.val());
+          data = snapshot.val(); 
+          console.log(data);
+          this.$store.dispatch('setState', data);
+        });
       }).catch((error) =>{
         // Handle error.
         this.email = "";
@@ -66,10 +76,9 @@ export default {
         console.log(errorCode);
         console.log(errorMessage);
       });
-      var user = firebase.auth().currentUser;
-      if (user) {
-        console.log(user.uid);
-      }
+     
+        
+        
     }
   }
 };

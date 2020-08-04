@@ -20,13 +20,17 @@
       <button @click="modalOpen=true" class="add-button bg-green-500 p-4 rounded-full">
         <span class="font-black text-gray-100">+</span>
         <span class="font-bold text-gray-100"> Add new query</span>
-      </button>   
+      </button>  
+      <button @click="store">
+        Store the data
+      </button> 
   </div>
 </template>
 
 <script>
 import Adder from './Adder.vue';
 import Doc from "./Doc.vue"
+import firebase from "firebase";
 export default {
   data: function() {
     return {
@@ -39,6 +43,16 @@ export default {
   components: {
     doc: Doc,
     adder: Adder,
+  },
+  methods: {
+    store() {
+      var user = firebase.auth().currentUser;
+      if (user) {
+        let uid = user.uid
+        firebase.database().ref('/users/' + uid.toString()).set(this.$store.getters.all);
+      }
+      
+    }
   },
   computed: {
     docs: function() {
