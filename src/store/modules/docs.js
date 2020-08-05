@@ -25,9 +25,26 @@ const mutations = {
     'EDIT'(state, bag) {
         let ret = bag.ret;
         let index = state.docs.findIndex(doc => doc.id == bag.id);
-        console.log(index);
         if (index) {
             state.docs.splice(index, 1, ret);
+            var user = firebase.auth().currentUser;
+            if (user) {
+                let uid = user.uid
+                firebase.database().ref('/users/' + uid.toString()).set(state);
+            }  
+        }
+    },
+    'REMOVE'(state, id) {
+        let index = state.docs.findIndex(doc => doc.id == id);
+        console.log(index);
+        if (index || index === 0) {
+            state.docs.splice(index, 1);
+            console.log(state.docs);
+            var user = firebase.auth().currentUser;
+            if (user) {
+                let uid = user.uid
+                firebase.database().ref('/users/' + uid.toString()).set(state);
+            }  
         }
     }
 }
@@ -41,6 +58,9 @@ const actions = {
     },
     edit({commit}, bag) {
         commit('EDIT', bag);
+    },
+    remove({commit}, id) {
+        commit('REMOVE', id);
     }
 }
 

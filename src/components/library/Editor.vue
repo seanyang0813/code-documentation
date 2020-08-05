@@ -10,7 +10,7 @@
                         <h1 class="font-mono text-blue-900 text-2xl text-center font-bold">
                             Editing component
                         </h1>
-                    </div>
+                    </div>                    
                     <keep-alive>
                         <component :doc="doc" v-bind:is="current" @updateQuery="updateQuery" @updateVariables="updateVariables" @changePage="changePage" :query="query" :variables="variables" :placeHolder="placeHolder" @close="$emit('close')"></component>
                     </keep-alive>

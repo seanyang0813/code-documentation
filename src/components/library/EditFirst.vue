@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div class="modal-body ">
         <label for="query">The query</label>
         <br>
@@ -10,9 +11,35 @@
                 Insert variable
             </button>
         </div>
-        <button @click="toSecond" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Next
-        </button>
+        <div class="flex justify-between pt-6">
+            <button @click="confirm=true" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Remove current component
+            </button>
+            <button @click="toSecond" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Next
+            </button>
+        </div>
+        
+
+    </div>
+    <transition v-if="confirm" name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container-small overflow-auto">
+                    <p class="font-mono text-blue-900 text-xl font-bold">Are you sure you want to delete this component?</p>
+                    <div class="flex justify-between">
+                        <button @click="remove" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Yes
+                        </button>
+                        <button @click="confirm=false" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            No
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </transition>
 
     </div>
 </template>
@@ -20,7 +47,7 @@
 import 'codemirror/mode/sql/sql.js'
 import 'codemirror/theme/base16-dark.css'
 export default {
-    props: ["query", "placeHolder"],
+    props: ["query", "placeHolder", 'doc'],
     data: function() {
         return {
             localQuery: '',
@@ -30,7 +57,8 @@ export default {
                 theme: 'base16-dark',
                 lineNumbers: true,
                 mode: "text/x-sql"
-            }
+            },
+            confirm: false
         }
         
     },
@@ -50,6 +78,10 @@ export default {
         insertInput() {
             this.$refs.cm.codemirror.replaceSelection(this.placeHolder);
             this.$refs.cm.codemirror.focus();
+        },
+        remove() {
+            this.$emit('close');
+            this.$store.dispatch('remove', this.doc.id);
         }
     },
     mounted() {
