@@ -16,8 +16,9 @@
       <p v-if="!loggedin" class="m-10 font-mono text-red-600 text-xl text-center font-bold">Warning: you are not signed in. Your documentation will not be saved</p>
       <p v-if="docs.length == 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">Click on add new qeury to create query in library</p>
       <p v-if="filteredDocs.length == 0 && docs.length > 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">No result found</p>
-      <doc v-for="doc in filteredDocs" :key="doc.id" :doc="doc"></doc>
+      <doc @editorOpen="openEditor" v-for="doc in filteredDocs" :key="doc.id" :doc="doc"></doc>
       <adder v-if="modalOpen" @close="modalOpen=false"></adder>
+      <editor :doc="edited" v-if="editorOpen" @close="editorOpen=false"></editor>
       <button @click="modalOpen=true" class="add-button bg-green-500 p-4 rounded-full">
         <span class="font-black text-gray-100">+</span>
         <span class="font-bold text-gray-100"> Add new query</span>
@@ -29,19 +30,23 @@
 import Adder from './Adder.vue';
 import Doc from "./Doc.vue"
 import firebase from "firebase";
+import Editor from './Editor.vue';
 export default {
   data: function() {
     return {
       modalOpen: false,
+      editorOpen: false,
       search: '',
       searchQuery: true,
       searchDescription: true,
       loggedin: false,
+      edited: null,
     }
   },
   components: {
     doc: Doc,
     adder: Adder,
+    editor: Editor,
   },
   methods: {
     store() {
@@ -51,6 +56,11 @@ export default {
         firebase.database().ref('/users/' + uid.toString()).set(this.$store.getters.all);
       }  
     },
+    openEditor(doc) {
+      this.edited = doc;
+      console.log(this.edited);
+      this.editorOpen = true;
+    }
   },
   computed: {
     docs: function() {
@@ -80,10 +90,6 @@ export default {
     var user = firebase.auth().currentUser;
     if (user) {
       this.loggedin = true;
-      firebase.database().ref('/users/' + user.uid.toString()).once('value').then((snapshot) => {
-        var data = snapshot.val();
-        this.$store.dispatch('setState', data);
-      })
     }
     console.log(user);
     console.log("mounted");

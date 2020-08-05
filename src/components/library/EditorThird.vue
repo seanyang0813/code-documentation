@@ -14,25 +14,25 @@
             </span>
         </div>
         <div class="flex justify-between">
-            <button @click="$emit('changePage', 'second')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button @click="toSecond" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Previous
             </button>
-            <button @click="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                submit
+            <button @click="update" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Update 
             </button>
         </div>
     </div>
 </template>
 <script>
 export default {
-    props: ["query", "placeHolder", "variables"],
+    props: ["query", "placeHolder", "variables", 'doc'],
     data() {
         return {
             inputs: [],
             inputsDescription: new Map(),
             colorCode: [],
             regex: /<😀.*?>/g,
-            description: '',
+            description: this.doc.description,
         }
     },
     computed: {
@@ -46,13 +46,15 @@ export default {
         }
     },
     methods: {
-        submit() {
+        update() {
             let ret = {};
             ret.query = this.query;
             ret.description = this.description;
             ret.map = this.inputsDescription;
-            ret.id = this.$store.getters.queryId;
-            this.$store.dispatch('addQuery', ret);
+            let bag = {};
+            bag.ret = ret;
+            bag.id = this.doc.id;
+            this.$store.dispatch('edit', bag);
             this.$emit("close");
         },
         randomColor() {
@@ -62,10 +64,21 @@ export default {
                 let b = Math.floor(256 * Math.random());
                 this.colorCode[i] = [r,g,b];
              }
+        },
+        toSecond() {
+            this.$emit('changePage', 'second');
+        },
+        putDescription() {
+            for (var key in this.doc.map) {
+                if (this.parsedVariables.has(key)) {
+                    this.inputsDescription[key] = this.doc.map[key];
+                }
+            }
         }
     },
     created() {
         this.randomColor();
+        this.putDescription();
     },
     watch: {
         query: function() {

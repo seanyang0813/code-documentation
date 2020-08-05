@@ -3,8 +3,7 @@
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2 break-words">
                 <p>
-                    <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}
-                        <input disabled v-if="index < (parsed.length - 1)" class="border border-black" style="width: 3em" type="text">
+                    <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap">{{segment}}<input disabled v-if="index < (parsed.length - 1)" class="border border-black" style="width: 3em" type="text">
                     </span>
                 </p> 
             </div>

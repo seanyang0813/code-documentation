@@ -16,8 +16,19 @@ const mutations = {
        }  
     },
     'SET_STATE'(state, newState) {
-        state.docs = newState.docs;
-        state.queryId = newState.queryId;
+        if (newState) {
+            state.docs = newState.docs;
+            state.queryId = newState.queryId;
+        }
+        
+    },
+    'EDIT'(state, bag) {
+        let ret = bag.ret;
+        let index = state.docs.findIndex(doc => doc.id == bag.id);
+        console.log(index);
+        if (index) {
+            state.docs.splice(index, 1, ret);
+        }
     }
 }
 
@@ -27,6 +38,9 @@ const actions = {
     },
     setState({commit}, newState) {
         commit('SET_STATE', newState);
+    },
+    edit({commit}, bag) {
+        commit('EDIT', bag);
     }
 }
 

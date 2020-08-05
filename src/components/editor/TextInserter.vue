@@ -10,8 +10,7 @@
                         <h1 class="font-mono text-blue-900 text-2xl text-center font-bold">
                             Insert into editor
                         </h1>
-                        <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap my-1">{{segment}}
-                            <input disabled :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" :placeholder="inputs[index]" v-if="index < (parsed.length - 1)" v-model="userValues[index]" class="border" type="text">
+                        <span v-for="(segment, index) in parsed" :key="`segment-${index}`" class="whitespace-pre-wrap my-1">{{segment}}<input disabled :style="{borderColor: `rgb(${colorCode[index][0]}, ${colorCode[index][1]}, ${colorCode[index][2]})`}" :placeholder="inputs[index]" v-if="index < (parsed.length - 1)" v-model="userValues[index]" class="border" type="text">
                         </span>
                         <p>
                             description: {{doc.description}}
