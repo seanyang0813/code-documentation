@@ -2,6 +2,7 @@ import firebase from "firebase";
 const state = {
     docs: [],
     queryId: 0,
+    code: '',
 }
 
 const mutations = {
@@ -19,6 +20,7 @@ const mutations = {
         if (newState) {
             state.docs = newState.docs;
             state.queryId = newState.queryId;
+            state.code = newState.code;
         }
         
     },
@@ -46,6 +48,15 @@ const mutations = {
                 firebase.database().ref('/users/' + uid.toString()).set(state);
             }  
         }
+    },
+    'EDITOR'(state, code) {
+        state.code = code;
+        console.log('editor updated')
+        var user = firebase.auth().currentUser;
+        if (user) {
+            let uid = user.uid
+            firebase.database().ref('/users/' + uid.toString() + '/code').set(state.code);
+        }  
     }
 }
 
@@ -61,6 +72,9 @@ const actions = {
     },
     remove({commit}, id) {
         commit('REMOVE', id);
+    },
+    editor({commit}, code) {
+        commit('EDITOR', code);
     }
 }
 
@@ -74,6 +88,9 @@ const getters = {
     },
     all(state) {
         return state
+    },
+    code(state) {
+        return state.code
     }
 }
 
