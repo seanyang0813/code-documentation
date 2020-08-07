@@ -5,7 +5,7 @@
         <br>
         <!--<textarea v-model="localQuery" ref="ta" name="query" placeholder="Enter code here" class="border-gray-600 border rounded shadow w-full">
         </textarea>-->
-        <codemirror ref="cm" class="mb-6 CodeMirror codeoverflow-y-auto" v-model="localQuery" :options="cmOptions"></codemirror>
+        <codemirror ref="cm" class="mb-6 codeoverflow-y-auto" v-model="localQuery" :options="cmOptions"></codemirror>
         <div class="flex justify-center">
             <button @click="insertInput" class="bg-blue-700 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">
                 Insert variable
