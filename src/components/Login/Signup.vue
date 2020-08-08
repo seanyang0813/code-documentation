@@ -24,7 +24,7 @@
         <p v-if="error" class="text-red-600 mb-3 text-xs">{{errorMessage}}</p>
         <div class="flex items-center justify-between">
           <button @click="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-            Sign In
+            Sign Up
           </button>
         </div>
       </form>

@@ -21,8 +21,13 @@ const mutations = {
             if (newState.docs) {
                 state.docs = newState.docs;
             }
-            state.queryId = newState.queryId;
-            state.code = newState.code;
+            if (state.queryId) {
+                state.queryId = newState.queryId;
+            }
+            if (state.code) {
+                state.code = newState.code;
+            }
+            
         }
         
     },
