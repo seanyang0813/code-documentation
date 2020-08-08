@@ -85,7 +85,7 @@ export default {
         }
     },
     mounted() {
-        this.$refs.cm.codemirror.setSize('70%', null);
+        //this.$refs.cm.codemirror.setSize('70%', null);
     }
     
 }
