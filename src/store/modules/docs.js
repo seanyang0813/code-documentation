@@ -18,7 +18,9 @@ const mutations = {
     },
     'SET_STATE'(state, newState) {
         if (newState) {
-            state.docs = newState.docs;
+            if (newState.docs) {
+                state.docs = newState.docs;
+            }
             state.queryId = newState.queryId;
             state.code = newState.code;
         }
@@ -83,7 +85,6 @@ const getters = {
         if (state.docs) {
             return state.docs.map(doc=> doc);
         }
-        return null   
     },
     queryId(state) {
         return state.queryId;
