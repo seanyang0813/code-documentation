@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-body ">
+    <div class="modal-body">
 
         <label for="query">The query</label>
         <br>

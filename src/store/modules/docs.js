@@ -80,8 +80,10 @@ const actions = {
 
 const getters = {
     docs (state) {
-        return state.docs.map(doc=> doc);
-        
+        if (state.docs) {
+            return state.docs.map(doc=> doc);
+        }
+        return null   
     },
     queryId(state) {
         return state.queryId;
