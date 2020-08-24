@@ -13,7 +13,7 @@
       </div>
       <p v-if="(!searchDescription && !searchQuery && search)" class="text-red-600">Warning: No search option is selected</p>
       <!-- the documentations -->
-      <p v-if="docs.length == 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">Click on add new qeury to create query in library</p>
+      <p v-if="docs.length == 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">Go to the library tab to create new documentations</p>
       <p v-if="filteredDocs.length == 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">No result found</p>
       <doc v-for="doc in filteredDocs" :key="doc.id" :doc="doc"></doc>
   </div>
