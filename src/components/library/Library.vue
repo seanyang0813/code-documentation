@@ -13,7 +13,7 @@
       </div>
       <p v-if="(!searchDescription && !searchQuery && search)" class="text-red-600">Warning: No search option is selected</p>
       <!-- the documentations -->
-      <p v-if="!loggedin" class="m-10 font-mono text-red-600 text-xl text-center font-bold">Warning: you are not signed in. Your documentation will not be saved</p>
+      <p v-if="!loggedin" class="m-10 font-mono text-red-600 text-xl text-center font-bold">Warning: you are not signed in. Your documentation will not be saved after closing the page</p>
       <p v-if="docs.length == 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">Click on add new qeury to create query in library</p>
       <p v-if="filteredDocs.length == 0 && docs.length > 0" class="m-10 font-mono text-blue-900 text-2xl text-center font-bold">No result found</p>
       <doc @editorOpen="openEditor" v-for="doc in filteredDocs" :key="doc.id" :doc="doc"></doc>
