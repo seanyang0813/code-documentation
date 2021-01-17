@@ -1,5 +1,5 @@
 # code-documentation
-a no code tool to create sql templates with documentations. It has a built in editor and allows code insertion into the editor directly. It aims to lower the barrier to use code for non technical people
+A web application that lets users generate documented code snippets with descriptions and variables. It aims to lower the barrier to use code for non technical people
 # The link to the web app
 [https://code-documentation.vercel.app/](https://code-documentation.vercel.app/)
 # How to use it
